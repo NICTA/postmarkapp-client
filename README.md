@@ -5,11 +5,13 @@ A basic postmarkapp.com HTTP API client for Scala. Uses [Argonaut](http://argona
 Sending emails
 ---
 1. Import the library
+
 ```
 libraryDependencies += "au.com.nicta" % "postmarkapp-client" % "0.1.0"
 ```
 
 2. Create your email to send and send away.
+
 ```
 import au.com.nicta.postmark.sending._
 import scala.concurrent._
@@ -25,6 +27,7 @@ val sentTheEmail = PostmarkEmailer.request(settings)(emailRequest)  // This retu
 
 Await.result(sentTheEmail, 0 nanos) // Get the response from the future
 ```
+
 
 PostmarkEmailer has two methods (email and emails) that support sending single and batch emails. Both return a Future (courtesy of dispatch's async HTTP requests).
 
