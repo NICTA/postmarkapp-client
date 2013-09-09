@@ -1,0 +1,11 @@
+/.lib
+/project/target
+/target
+/project/project
+/gen
+*.iml
+.idea
+.cache
+.project
+.settings
+.classpath
