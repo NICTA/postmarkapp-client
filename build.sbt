@@ -1,5 +1,3 @@
-import AssemblyKeys._
-
 import sbtrelease.ReleasePlugin.ReleaseKeys.snapshotDependencies
 
 organization := "au.com.nicta"
@@ -18,35 +16,13 @@ releaseSettings
 // which is relatively stable but is not on maven central.
 snapshotDependencies := Seq()
 
-assemblySettings
+crossScalaVersions := Seq("2.9.2", "2.10.0")
 
-assemblyCacheOutput in assembly := true
+publishMavenStyle := true
 
-mergeStrategy in assembly := {
-  case "reference.conf" =>
-    MergeStrategy.concat
-  case PathList("META-INF", xs @ _*) =>
-    (xs map {_.toLowerCase}) match {
-      case ("manifest.mf" :: Nil) | ("index.list" :: Nil) | ("dependencies" :: Nil) =>
-        MergeStrategy.discard
-      case ps @ (x :: xs) if ps.last.endsWith(".sf") || ps.last.endsWith(".dsa") =>
-        MergeStrategy.discard
-      case "plexus" :: xs =>
-        MergeStrategy.discard
-      case "services" :: xs =>
-        MergeStrategy.filterDistinctLines
-      case ("spring.schemas" :: Nil) | ("spring.handlers" :: Nil) =>
-        MergeStrategy.filterDistinctLines
-      case _ => MergeStrategy.first
-    }
-  case _ => MergeStrategy.first
-}
+publishArtifact in Test := false
 
-artifact in (Compile, assembly) ~= { art =>
-  art.copy(`classifier` = Some("assembly"))
-}
-
-addArtifact(artifact in (Compile, assembly), assembly)
+pomIncludeRepository := { _ => false }
 
 libraryDependencies ++= Seq(
   "net.databinder.dispatch" % "dispatch-core_2.10" % "0.11.0",
