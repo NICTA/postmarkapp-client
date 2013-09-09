@@ -16,7 +16,7 @@ releaseSettings
 // which is relatively stable but is not on maven central.
 snapshotDependencies := Seq()
 
-crossScalaVersions := Seq("2.9.2", "2.10.0")
+crossScalaVersions := Seq("2.10.0")
 
 publishMavenStyle := true
 
