@@ -7,7 +7,7 @@ Sending emails
 1. Import the library
 
 ```
-libraryDependencies += "au.com.nicta" % "postmarkapp-client" % "0.1.0"
+libraryDependencies += "au.com.nicta" %% "postmarkapp-client" % "0.1.0"
 ```
 
 2. Create your email to send and send away.
