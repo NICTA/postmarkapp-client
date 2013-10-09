@@ -8,10 +8,10 @@ import com.ning.http.client.Response
 
 object PostmarkEmailer {
   def email(email: Email): PostmarkRequest[Email, SentEmail] =
-    PostmarkRequest("/email", email)
+    PostmarkRequest("email", email)
 
   def emails(emails: List[Email]): PostmarkRequest[List[Email], List[SentEmail]] =
-    PostmarkRequest("/email/batch", emails)
+    PostmarkRequest("email/batch", emails)
 
   def request[A: EncodeJson, B: DecodeJson](settings: PostmarkSettings)(req: PostmarkRequest[A, B]) = {
     val r = (url(settings.apiUrl) / req.path)
