@@ -7,18 +7,18 @@ import com.ning.http.client.Response
 
 
 object PostmarkEmailer {
-  def email(email: Email): PostmarkRequest[Email, SentEmail] =
+  def email(email: Email): PostmarkRequest[Email] =
     PostmarkRequest("email", email)
 
-  def emails(emails: List[Email]): PostmarkRequest[List[Email], List[SentEmail]] =
+  def emails(emails: List[Email]): PostmarkRequest[List[Email]] =
     PostmarkRequest("email/batch", emails)
 
-  def request[A: EncodeJson, B: DecodeJson](settings: PostmarkSettings)(req: PostmarkRequest[A, B]) = {
+  def request[A: EncodeJson, B: DecodeJson](settings: PostmarkSettings)(req: PostmarkRequest[A]) = {
     val r = (url(settings.apiUrl) / req.path)
       .addHeader("Accept", "application/json")
       .addHeader("Content-Type", "application/json")
       .addHeader("X-Postmark-Server-Token", settings.apiToken)
-      .POST << implicitly[EncodeJson[A]].encode(req.content).nospaces
+      .POST << req.content.asJson.nospaces
 
     def decodeResponse[X: DecodeJson](f: X => PostmarkResponse[B])(code: Int, body: String) =
       body.decodeWith[PostmarkResponse[B], X](f,
