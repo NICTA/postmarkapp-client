@@ -22,14 +22,12 @@ import au.com.nicta.postmark.common.Header
  * @param headers
  * @param attachments
  */
-case class Email(from: String, to: List[String], cc: List[String], bcc: List[String],
-                 subject: String, tag: Option[String], html: Option[String], text: Option[String],
-                 replyTo: String, headers: List[Header], attachments: List[Attachment])
+case class Email(from: String = "", to: List[String] = Nil, cc: List[String] = Nil, bcc: List[String] = Nil,
+                 subject: String = "", tag: Option[String] = None, html: Option[String] = None, text: Option[String] = None,
+                 replyTo: String = "", headers: List[Header] = Nil, attachments: List[Attachment] = Nil)
 
 object Email {
   import util.EmailUtil._
-
-  val defaultEmail = Email("", List.empty, List.empty, List.empty, "", None, None, None, "", List.empty, List.empty)
 
   private def applySplitEmailsByCommas(from: String, to: String, cc: String, bcc: String,
                                        subject: String, tag: Option[String], html: Option[String], text: Option[String],
