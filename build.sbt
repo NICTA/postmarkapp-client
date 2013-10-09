@@ -27,6 +27,7 @@ libraryDependencies ++= Seq(
   "org.scalaz" %% "scalaz-scalacheck-binding" % "7.0.3" % "it, test",
   "org.scalacheck" %% "scalacheck" % "1.10.0" % "it, test",
   "org.specs2" %% "specs2" % "2.1.1" % "it, test",
+  "junit" % "junit" % "4.7" % "it, test",
   "org.typelevel" %% "scalaz-specs2" % "0.1.3" % "test"
 )
 
