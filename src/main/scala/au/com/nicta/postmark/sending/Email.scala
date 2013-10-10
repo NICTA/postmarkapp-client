@@ -9,7 +9,7 @@ import au.com.nicta.postmark.common.Header
 
 /**
  * Email data type for sending emails. You can use the defaultEmail as a base to create new emails e.g.
- *   Email.defaultEmail.copy(from = "you@yourdomain.com", to = "person@example.com", subject = "This is an example")
+ *   Email(from = "you@yourdomain.com", to = "person@example.com", subject = "This is an example")
  * @param from
  * @param to
  * @param cc
@@ -46,6 +46,12 @@ object Email {
   implicit def EmailEqual: Equal[Email] = Equal.equalA[Email]
 }
 
+/**
+ * Attachment to send
+ * @param name Name of the attachment
+ * @param content Base64 encoded content
+ * @param contentType The content type
+ */
 case class Attachment(name: String, content: String, contentType: String)
 
 object Attachment {
@@ -55,14 +61,26 @@ object Attachment {
   implicit def AttachmentEqual: Equal[Attachment] = Equal.equalA[Attachment]
 }
 
-case class SentEmail(messageID: String, submittedAt: DateTime, to: String)
-
+/**
+ * Response from Postmark
+ * @param messageID The unique message Id for the request
+ * @param submittedAt when the request was submitted
+ * @param to The people who the email was sent to (only the people on the 'to' list; cc and bcc addresses are not returned)
+ */
+case class SentEmail(messageID: String, submittedAt: DateTime, to: List[String])
 
 object SentEmail {
   import util.DateTimeISO8601CodecJsons._
+  import util.EmailUtil._
+
+  private def applySplitEmailsByCommas(messageID: String, submittedAt: DateTime, to: String) =
+    SentEmail(messageID, submittedAt, splitEmailsByCommas(to))
+
+  private def unapplySplitEmailsByCommas(emailResponse: SentEmail) =
+    Some(emailResponse.messageID, emailResponse.submittedAt, joinEmailsByCommas(emailResponse.to))
 
   implicit def SentEmailCodecJson: CodecJson[SentEmail] =
-    casecodec3(SentEmail.apply, SentEmail.unapply)("MessageID", "SubmittedAt", "To")
+    casecodec3(applySplitEmailsByCommas, unapplySplitEmailsByCommas)("MessageID", "SubmittedAt", "To")
 
   implicit def SentEmailEqual: Equal[SentEmail] = Equal.equalA[SentEmail]
 }

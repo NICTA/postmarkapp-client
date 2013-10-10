@@ -7,13 +7,22 @@ import scalaz._, std.option._, syntax.show._, syntax.apply._, scalacheck.ScalaCh
 import org.joda.time.DateTime
 import au.com.nicta.test.BasicArbitraries
 import au.com.nicta.postmark.common.Header
+import org.apache.commons.codec.binary.Base64
 
 trait PostmarkArbitraries extends BasicArbitraries {
   implicit def AttachmentArbitrary: Arbitrary[Attachment] =
-    Arbitrary((arbitrary[String] |@| arbitrary[String] |@| arbitrary[String])(Attachment.apply))
+    Arbitrary(for {
+      name <- arbitrary[NonEmptyString]
+      content <- arbitrary[NonEmptyString]
+      contentType <- arbitrary[ContentTypeString]
+    } yield Attachment(name.value + ".txt", Base64.encodeBase64String(content.value.toCharArray.map(_.toByte)), contentType.value))
 
   implicit def SentEmailArbitrary: Arbitrary[SentEmail] =
-    Arbitrary((arbitrary[String] |@| arbitrary[DateTime] |@| arbitrary[String])(SentEmail.apply))
+    Arbitrary(for {
+      id <- arbitrary[String]
+      submittedAt <- arbitrary[DateTime]
+      to <- genLimitedList[EmailString](0, 20)
+    } yield SentEmail(id, submittedAt, to.map(_.value)))
 
   implicit def EmailArbitrary: Arbitrary[Email] = Arbitrary(for {
     from <- arbitrary[EmailString]
@@ -27,11 +36,22 @@ trait PostmarkArbitraries extends BasicArbitraries {
     replyTo <- arbitrary[EmailString]
     headers <- genLimitedList[Header](0, 20)
     attachments <- genLimitedList[Attachment](0, 20)
-  } yield
+    backupText <- arbitrary[NonEmptyString]
+  } yield {
+    val (textToUse, htmlToUse) = (text, html) match {
+      case (None, None) => (Some(backupText.value), Some(backupText.value))
+      case (a, b) => (a, b)
+    }
     Email(
       from.value,
       to.map(_.value), cc.map(_.value), bcc.map(_.value),
-      subject, tag, html, text, replyTo.value,
+      subject, tag, htmlToUse, textToUse, replyTo.value,
       headers,
-      attachments))
+      attachments)
+  })
+
+  case class ContentTypeString(value: String)
+
+  implicit def ContentTypeStringArbitrary: Arbitrary[ContentTypeString] =
+    Arbitrary(Gen.oneOf(List("text/plain")) map ContentTypeString)
 }

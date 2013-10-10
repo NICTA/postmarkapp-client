@@ -28,7 +28,9 @@ libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.10.0" % "it, test",
   "org.specs2" %% "specs2" % "2.1.1" % "it, test",
   "junit" % "junit" % "4.7" % "it, test",
-  "org.typelevel" %% "scalaz-specs2" % "0.1.3" % "test"
+  "org.typelevel" %% "scalaz-specs2" % "0.1.3" % "test",
+  "org.slf4j" % "slf4j-nop" % "1.7.5" % "test",
+  "commons-codec" % "commons-codec" % "1.8" % "test"
 )
 
 testOptions in Test += Tests.Argument(TestFrameworks.Specs2, "junitxml", "console")

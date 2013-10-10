@@ -32,5 +32,15 @@ trait BasicArbitraries {
     } yield EmailString(usernameFirstChar + username + "@" + domainFirstChar + domain + ".com"))
 
   implicit def HeaderArbitrary: Arbitrary[Header] =
-    Arbitrary((arbitrary[String] |@| arbitrary[String])(Header.apply))
+    Arbitrary(for {
+      name <- arbitrary[NonEmptyString]
+      value <- arbitrary[NonEmptyString]
+    } yield Header(name.value, value.value))
+
+  case class NonEmptyString(value: String)
+  implicit def NonEmptyStringArbitrary: Arbitrary[NonEmptyString] =
+    Arbitrary(for {
+      firstChar <- alphaChar
+      rest <- arbitrary[String]
+    } yield NonEmptyString(firstChar + rest))
 }
