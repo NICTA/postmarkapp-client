@@ -30,7 +30,8 @@ libraryDependencies ++= Seq(
   "junit" % "junit" % "4.7" % "it, test",
   "org.typelevel" %% "scalaz-specs2" % "0.1.3" % "test",
   "org.slf4j" % "slf4j-nop" % "1.7.5" % "test",
-  "commons-codec" % "commons-codec" % "1.8" % "test"
+  "commons-codec" % "commons-codec" % "1.8" % "test",
+  "com.github.scopt" %% "scopt" % "3.1.0" % "it"
 )
 
 testOptions in Test += Tests.Argument(TestFrameworks.Specs2, "junitxml", "console")

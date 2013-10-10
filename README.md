@@ -42,6 +42,21 @@ Receiving emails
 A basic data type (with JSON codec mappings) for receiving emails from Postmark is in au.com.nicta.postmark.receiving package.
 
 
+Testing
+---
+There are separate unit and integration test trees. Unit tests primarily test the codecs, while the integration tests send requests to Postmark using the test token.
+
+To run the tests, start up SBT (e.g. using the sbt runner in the root directory of this repository), and then run:
+```
+test
+it:test
+```
+
+There is also a demo application (demo.Sender under src/it/scala) that you can use to send emails from the command line. From SBT:
+```
+it:run-main demo.Sender -s -t <your token> <from email address> <to email address> <subject> <html body>
+```
+
 Credits
 ---
 Shamelessly ported Mark Hibberd's [Haskell client](https://github.com/apiengine/postmark)
