@@ -4,6 +4,11 @@ package common
 
 import argonaut._, Argonaut._
 
+/**
+ * Wraps custom headers in emails. When sending emails, the header name cannot be blank.
+ * @param name Header name
+ * @param value Header value.
+ */
 case class Header(name: String, value: String)
 
 object Header {

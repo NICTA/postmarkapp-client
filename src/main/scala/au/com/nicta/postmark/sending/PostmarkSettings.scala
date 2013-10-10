@@ -1,6 +1,12 @@
 package au.com.nicta.postmark
 package sending
 
+/**
+ * Wraps up settings required to send things to Postmark. Use the PostmarkSettings.http/https factory functions to
+ * create suitable settings.
+ * @param apiUrl The Postmark API url
+ * @param apiToken Your API token
+ */
 case class PostmarkSettings(apiUrl: String, apiToken: String)
 
 object PostmarkSettings {

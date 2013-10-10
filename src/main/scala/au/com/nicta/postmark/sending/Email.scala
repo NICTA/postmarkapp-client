@@ -10,17 +10,17 @@ import au.com.nicta.postmark.common.Header
 /**
  * Email data type for sending emails. You can use the defaultEmail as a base to create new emails e.g.
  *   Email(from = "you@yourdomain.com", to = "person@example.com", subject = "This is an example")
- * @param from
- * @param to
- * @param cc
- * @param bcc
- * @param subject
- * @param tag
- * @param html
- * @param text
- * @param replyTo
- * @param headers
- * @param attachments
+ * @param from The from email address. This must match one configured within Postmark
+ * @param to To email addresses. In total, you can only send to 20 emails (including CCs and BCCs)
+ * @param cc  CC email addresses. In total, you can only send to 20 emails (including CCs and BCCs)
+ * @param bcc BCC email addresses. In total, you can only send to 20 emails (including CCs and BCCs)
+ * @param subject Email subject
+ * @param tag Optional email tags
+ * @param html HTML body for the email. Either this or the text field (or both) must be provided.
+ * @param text Plain text body for the email. Either this or the HTML field (or both) must be provided.
+ * @param replyTo Reply to email address
+ * @param headers Any custom headers.
+ * @param attachments Any attachments.
  */
 case class Email(from: String = "", to: List[String] = Nil, cc: List[String] = Nil, bcc: List[String] = Nil,
                  subject: String = "", tag: Option[String] = None, html: Option[String] = None, text: Option[String] = None,
@@ -48,9 +48,9 @@ object Email {
 
 /**
  * Attachment to send
- * @param name Name of the attachment
+ * @param name Name of the attachment (See the Postmark API docs; the file extension is important!)
  * @param content Base64 encoded content
- * @param contentType The content type
+ * @param contentType The content type (See the Postmark API docs on supported content types)
  */
 case class Attachment(name: String, content: String, contentType: String)
 
