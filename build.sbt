@@ -1,5 +1,3 @@
-import sbtrelease.ReleasePlugin.ReleaseKeys.snapshotDependencies
-
 organization := "au.com.nicta"
 
 name := "postmarkapp-client"

@@ -18,7 +18,7 @@ object B extends Build
   lazy val root =
     Project("root", file("."))
       .configs( CustomIntegrationTest )
-      .settings( inConfig(CustomIntegrationTest)(Defaults.testSettings) : _*)
+      .settings( releaseSettings ++ inConfig(CustomIntegrationTest)(Defaults.testSettings) : _*)
 
   /**
    * RELEASE PROCESS
