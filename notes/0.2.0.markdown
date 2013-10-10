@@ -1,0 +1,3 @@
+First public release including:
+* Support for sending single and batched emails
+* Case classes for handling inbound emails from Postmark.
