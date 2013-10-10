@@ -1,0 +1,49 @@
+{
+  "organization" : "au.com.nicta",
+  "name" : "postmarkapp-client",
+  "version" : "0.2.0",
+  "description" : "postmarkapp-client",
+  "site" : "https://github.com/NICTA/postmarkapp-client",
+  "tags" : [ ],
+  "docs" : "",
+  "resolvers" : [ "https://oss.sonatype.org/content/repositories/releases" ],
+  "dependencies" : [ {
+    "organization" : "net.databinder.dispatch",
+    "name" : "dispatch-core_2.10",
+    "version" : "0.11.0"
+  }, {
+    "organization" : "io.argonaut",
+    "name" : "argonaut",
+    "version" : "6.0.1"
+  }, {
+    "organization" : "com.github.nscala-time",
+    "name" : "nscala-time",
+    "version" : "0.4.0"
+  }, {
+    "organization" : "org.scalaz",
+    "name" : "scalaz-scalacheck-binding",
+    "version" : "7.0.3"
+  }, {
+    "organization" : "org.scalacheck",
+    "name" : "scalacheck",
+    "version" : "1.10.0"
+  }, {
+    "organization" : "org.specs2",
+    "name" : "specs2",
+    "version" : "2.1.1"
+  }, {
+    "organization" : "junit",
+    "name" : "junit",
+    "version" : "4.7"
+  }, {
+    "organization" : "com.github.scopt",
+    "name" : "scopt",
+    "version" : "3.1.0"
+  } ],
+  "scalas" : [ "2.10.2" ],
+  "licenses" : [ {
+    "name" : "BSD-style",
+    "url" : "http://opensource.org/licenses/BSD-3-Clause"
+  } ],
+  "sbt" : false
+}
