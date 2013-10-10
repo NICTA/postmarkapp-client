@@ -30,6 +30,8 @@ publishTo := {
     Some("releases"  at nexus + "service/local/staging/deploy/maven2")
 }
 
+credentials := Seq(Credentials(Path.userHome / ".sbt" / "sonatype.credentials"))
+
 pomExtra := (
   <scm>
     <url>git@github.com:NICTA/postmarkapp-client.git</url>
