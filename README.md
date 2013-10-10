@@ -7,7 +7,7 @@ Sending emails
 1. Import the library
 
 ```
-libraryDependencies += "au.com.nicta" %% "postmarkapp-client" % "0.1.0"
+libraryDependencies += "au.com.nicta" %% "postmarkapp-client" % "0.2.0"
 ```
 
 2. Create your email to send and send away.
@@ -17,9 +17,9 @@ import au.com.nicta.postmark.sending._
 import scala.concurrent._
 import scala.concurrent.duration._
 
-val email = Email.defaultEmail.copy(to=List("myemail@example.com"), subject="Hello", text="My email body", from="sender@example.com")
+val email = Email(to=List("myemail@example.com"), subject="Hello", text="My email body", from="sender@example.com")
 
-val settings = PostmarkSettings.https("your api key")
+val settings = PostmarkSettings.https("your api key")   // Or use a PostmarkSettings.httpsTest to just test hitting the API without sending anything
 
 val emailRequest = PostmarkEmailer.email(email)
 
