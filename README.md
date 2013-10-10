@@ -1,5 +1,8 @@
 postmarkapp.com HTTP API client for Scala
 ===
+
+[![Build Status](https://travis-ci.org/NICTA/postmarkapp-client.png?branch=master)](https://travis-ci.org/NICTA/postmarkapp-client)
+
 A basic postmarkapp.com HTTP API client for Scala. Uses [Argonaut](http://argonaut.io) for JSON encoding/decoding and [Dispatch](http://http://dispatch.databinder.net/) for the HTTP calls.
 
 Sending emails
