@@ -4,7 +4,11 @@ organization := "au.com.nicta"
 
 name := "postmarkapp-client"
 
-scalaVersion := "2.10.0"
+homepage := Some(url("https://github.com/NICTA/postmarkapp-client"))
+
+licenses := Seq("BSD-style" -> url("http://opensource.org/licenses/BSD-3-Clause"))
+
+scalaVersion := "2.10.2"
 
 net.virtualvoid.sbt.graph.Plugin.graphSettings
 
@@ -12,13 +16,35 @@ seq(Revolver.settings: _*)
 
 releaseSettings
 
-crossScalaVersions := Seq("2.10.0")
+crossScalaVersions := Seq("2.10.2")
 
 publishMavenStyle := true
 
 publishArtifact in Test := false
 
 pomIncludeRepository := { _ => false }
+
+publishTo := {
+  val nexus = "https://oss.sonatype.org/"
+  if (version.value.trim.endsWith("SNAPSHOT"))
+    Some("snapshots" at nexus + "content/repositories/snapshots")
+  else
+    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+}
+
+pomExtra := (
+  <scm>
+    <url>git@github.com:NICTA/postmarkapp-client.git</url>
+    <connection>scm:git:git@github.com:NICTA/postmarkapp-client.git</connection>
+  </scm>
+  <developers>
+    <developer>
+      <id>sidneyshek</id>
+      <name>Sidney Shek</name>
+      <url>https://github.com/sidneyshek</url>
+    </developer>
+  </developers>)
+
 
 libraryDependencies ++= Seq(
   "net.databinder.dispatch" % "dispatch-core_2.10" % "0.11.0",
