@@ -14,8 +14,6 @@ net.virtualvoid.sbt.graph.Plugin.graphSettings
 
 seq(Revolver.settings: _*)
 
-releaseSettings
-
 crossScalaVersions := Seq("2.10.2")
 
 publishMavenStyle := true
@@ -62,4 +60,6 @@ libraryDependencies ++= Seq(
 
 testOptions in Test += Tests.Argument(TestFrameworks.Specs2, "junitxml", "console")
 
-scalacOptions += "-feature"
+scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-language:_")
+
+seq(lsSettings :_*)
